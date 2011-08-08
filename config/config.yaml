@@ -1,0 +1,83 @@
+#Provide your EC2 keys here.
+ec2:
+    access_key_id: XXXXXXXXXXXXXXXXXXXX
+    secret_access_key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+#Logging params go here    
+logs:
+    console: log/console.log
+    verbosepath: log/amis/
+    
+# This section defines some SSH parameters.
+# These are reloaded fairly dynamically, allowing for additions to this file to be included in jobs
+# without needing to restart the entire process.
+ssh:
+    #Path where SSH Keys are stored Key names must match EC2's names
+    key_path: ~/keys/
+    #Name of keypair to use for new instances this should also exist as a .pem in key_path.
+    key_name: XXXXXXXX
+    
+    #List of usernames to attempt when brute forcing.   
+    userlist:
+        - root
+        - ubuntu
+        - ec2-user
+        - bitnami
+        - oracle
+	- cloudmapreduce
+	- eclipse-rt-user
+	- ensembl
+	- newsapps
+	- openblock
+	- perforce
+	- smrtanalysis
+
+    #Defines Regexes to use when parsing users from banner.
+    #Regex is run against root's SSH banner, capture group should return username to try.
+    #
+    #Format is
+    #-
+    #   regex: "regex"
+    #   capturegroup: #
+    regex:
+        -   
+            regex: login as the user \x22([-_A-Za-z0-9]+)\x22 rather than
+            capturegroup: 1
+        -
+            regex: login as the ([-_A-Za-z0-9]+) user rather than
+            capturegroup: 1
+            
+#Options for tests go here;
+tests:
+    # file_contents regexs are used when searching within discovered files for sensitive data.
+    file_contents:
+        - regex: "((SECRET|ACCESS|KEY|ID)[-:_]?){3,3}"
+          descr: "AWS Access Keys Var"
+          sev: 2
+        - regex: "(AWS|EC2|AMAZON|AMZN)[-:_]?((SECRET[-:_]?|ACCESS[-:_]?))?(KEY[-:_]?|ID[-:_]?)+"
+          descr: "AWS Access Keys Var"
+          sev: 2
+        - regex: "([A-Z0-9]{20}|[A-Za-z0-9]{40})"
+          descr: "Possible AWS Access Keys"
+          sev: 3
+        - regex: "EC2_PRIVATE_KEY\s=.*\.pem"
+          descr: "Variable refering to AWS Private Key"
+          sev: 2
+        - regex: "EC2_CERT\s+=.*\.pem"
+          descr: "Variable refering to AWS Cert"
+          sev: 1
+        - regex: "[a-z0-9]{64}"
+          descr: "Possible Canonical ID"
+          sev: 2
+        - regex: "[0-9]{12}"
+          descr: "Possible AWS Account ID"
+          sev: 2      
+        - regex: "export EC2"
+          descr: "Possible AWS environment variables"
+          sev: 2        
+    active_connections:
+        ignore_host_connections: 
+	#This is a list of IPs whose connections aren't suspicious.  The IP you scan from should be added here.
+            - "169.254.169.254"  #EC2 Metadata API
+            - "127.0.0.1"
+    
