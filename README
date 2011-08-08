@@ -1,0 +1,61 @@
+#       d8888 888b     d888 8888888      8888888888                                                   888 
+#      d88888 8888b   d8888   888        888                                                          888 
+#     d88P888 88888b.d88888   888        888                                                          888 
+#    d88P 888 888Y88888P888   888        8888888    888  888 88888b.   .d88b.  .d8888b   .d88b.   .d88888 
+#   d88P  888 888 Y888P 888   888        888        `Y8bd8P' 888 "88b d88""88b 88K      d8P  Y8b d88" 888 
+#  d88P   888 888  Y8P  888   888        888          X88K   888  888 888  888 "Y8888b. 88888888 888  888 
+# d8888888888 888   "   888   888        888        .d8""8b. 888 d88P Y88..88P      X88 Y8b.     Y88b 888 
+#d88P     888 888       888 8888888      8888888888 888  888 88888P"   "Y88P"   88888P'  "Y8888   "Y88888 
+#                                                            888                                          
+#                                                            888                                          
+#                                                            888                                          
+#															
+#AMI Exposed - A framework for security scanning of Amazon Machine Images (AMIs)
+#Copyright (C) 2011 Jeff Jarmoc - Dell SecureWorks Counter Threat Unit
+#
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+AMI Exposed was first released at Defcon 19 in 2011.  It's a framework for testing of EC2 AMIs (Amazon Machine Images.)  Largely, it's a set of extensions to Amazon's AWS-SDK for Ruby (see http://aws.amazon.com/sdkforruby/) adding some helpful methods to their classes, and a few new classes.
+
+The Defcon presentation is the most official reference, but this file should help in getting started.
+
+##### Pre-Reqs #####
+Many Ruby gems are used throughout the tool, and must be installed in order for it to function properly.
+
+- aws-sdk-for-ruby - 
+	http://aws.amazon.com/sdkforruby/
+	https://github.com/amazonwebservices/aws-sdk-for-ruby
+- active_record - 
+	http://rubygems.org/gems/activerecord
+- threaded_collections - 
+	http://github.com/peteonrails/threadedcollections/tree/master
+	http://blog.peteonrails.com/?page_id=44
+- net-ssh - 
+	http://rubygems.org/gems/net-ssh
+
+##### Configuration #####
+In the config/config.yaml file that controls most aspects of the configuration.  At a minimum you'll need to; 
+	- Provide AWS access_key_id
+	- Provide AWS  secret_access_key
+	- Provide SSH key_path
+	- Provide SSH key_name (Must match both the keyfile, and the name in EC2!)
+	- Add your scan source IP(s) to ignore_host_connections:
+		If scanning from an EC2 instance, include both public and private IPs.
+		
+##### Database Configuration #####
+We ship with a working SQLLite configuration in config/database.yaml.  A blank SQLLite DB is stored in db/local/sqlite3
+
+If you wish to use a different database adapter, modify config/database.yaml and rake to import our db migration.
+
