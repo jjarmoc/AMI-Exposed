@@ -44,6 +44,7 @@ Many Ruby gems are used throughout the tool, and must be installed in order for 
 	http://blog.peteonrails.com/?page_id=44
 - net-ssh - 
 	http://rubygems.org/gems/net-ssh
+- sqlite3
 
 ##### Configuration #####
 In the config/config.yaml file that controls most aspects of the configuration.  At a minimum you'll need to; 
@@ -59,3 +60,9 @@ We ship with a working SQLLite configuration in config/database.yaml.  A blank S
 
 If you wish to use a different database adapter, modify config/database.yaml and rake to import our db migration.
 
+##### Development setup ######
+It may be helpful to set up RVM.
+	echo "rvm use 1.8.7-p334@amiexposed" > .rvmrc
+	
+Then you would do 
+	
