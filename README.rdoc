@@ -71,6 +71,15 @@ If you wish to use a different database adapter, modify config/database.yaml and
 == Development setup
 
 It may be helpful to set up RVM.
-	echo "rvm use 1.8.7-p334@amiexposed" > .rvmrc
+	>rvm use <ruby-version>
+	>rvm gemset create amiexposed
+	>rvm use <ruby-version>@amiexposed
+	>echo "rvm use <ruby-version>@amiexposed" > .rvmrc
 	
+Once RVM is set up, you can use bundler to get the necessary dependencies.
+	>gem install bundler
+	>bundle install
 	
+	This will pull the above mentioned gems for you.
+	** Note:  Still working on threaded_collection to figure out where to get that from.
+
