@@ -19,15 +19,17 @@
 # Filters images in a given region and tags all non-windows images.
 # Remaining tools use these tags to limit the images under test.
 
-require File.expand_path(File.dirname(__FILE__) + '/config/config')
-
+#require File.expand_path(File.dirname(__FILE__) + '/config/config')
+require 'config/config'
 require 'net/http'
 require 'logger'
 require "threaded_collections"
 
 puts "++ Starting up..."
 
-AWS.config(:logger => Logger.new(File.expand_path(File.dirname(__FILE__) + '/log/Tag_Images.log')))
+#AWS.config(:logger => Logger.new(File.expand_path(File.dirname(__FILE__) + '/log/Tag_Images.log')))
+AWS.config(:logger => Logger.new('log/amitagged.log'))
+
 instance = key_pair = group = nil
 
 begin
