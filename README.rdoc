@@ -1,3 +1,4 @@
+
 #       d8888 888b     d888 8888888      8888888888                                                   888 
 #      d88888 8888b   d8888   888        888                                                          888 
 #     d88P888 88888b.d88888   888        888                                                          888 
@@ -9,29 +10,32 @@
 #                                                            888                                          
 #                                                            888                                          
 #                                                            888                                          
-#															
-#AMI Exposed - A framework for security scanning of Amazon Machine Images (AMIs)
-#Copyright (C) 2011 Jeff Jarmoc - Dell SecureWorks Counter Threat Unit
-#
-#This program is free software: you can redistribute it and/or modify
-#it under the terms of the GNU General Public License as published by
-#the Free Software Foundation, either version 3 of the License, or
-#any later version.
-#
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#GNU General Public License for more details.
-#
-#You should have received a copy of the GNU General Public License
-#along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#			
+== AMI Exposed
+										
+AMI Exposed - A framework for security scanning of Amazon Machine Images (AMIs)
+Copyright (C) 2011 Jeff Jarmoc - Dell SecureWorks Counter Threat Unit
 
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+== History
 
 AMI Exposed was first released at Defcon 19 in 2011.  It's a framework for testing of EC2 AMIs (Amazon Machine Images.)  Largely, it's a set of extensions to Amazon's AWS-SDK for Ruby (see http://aws.amazon.com/sdkforruby/) adding some helpful methods to their classes, and a few new classes.
 
 The Defcon presentation is the most official reference, but this file should help in getting started.
 
-##### Pre-Reqs #####
+== Prerequisites
 Many Ruby gems are used throughout the tool, and must be installed in order for it to function properly.
 
 - aws-sdk-for-ruby - 
@@ -44,8 +48,12 @@ Many Ruby gems are used throughout the tool, and must be installed in order for 
 	http://blog.peteonrails.com/?page_id=44
 - net-ssh - 
 	http://rubygems.org/gems/net-ssh
+- sqlite3
 
-##### Configuration #####
+== Configuration
+
+=== Main Operational Configuration
+
 In the config/config.yaml file that controls most aspects of the configuration.  At a minimum you'll need to; 
 	- Provide AWS access_key_id
 	- Provide AWS  secret_access_key
@@ -54,8 +62,24 @@ In the config/config.yaml file that controls most aspects of the configuration. 
 	- Add your scan source IP(s) to ignore_host_connections:
 		If scanning from an EC2 instance, include both public and private IPs.
 		
-##### Database Configuration #####
+=== Database
+
 We ship with a working SQLLite configuration in config/database.yaml.  A blank SQLLite DB is stored in db/local/sqlite3
 
 If you wish to use a different database adapter, modify config/database.yaml and rake to import our db migration.
+
+== Development setup
+
+It may be helpful to set up RVM.
+	>rvm use <ruby-version>
+	>rvm gemset create amiexposed
+	>rvm use <ruby-version>@amiexposed
+	>echo "rvm use <ruby-version>@amiexposed" > .rvmrc
+	
+Once RVM is set up, you can use bundler to get the necessary dependencies.
+	>gem install bundler
+	>bundle install
+	
+	This will pull the above mentioned gems for you.
+	** Note:  Still working on threaded_collection to figure out where to get that from.
 

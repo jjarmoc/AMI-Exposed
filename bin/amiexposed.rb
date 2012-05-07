@@ -30,7 +30,11 @@ eos
 
 puts banner
 puts "++ Starting up..."
-require File.expand_path(File.dirname(__FILE__) + '/config/config')
+require 'config/config'
+require "threaded_collections"
+
+#require File.expand_path(File.dirname(__FILE__) + '/lib/threaded_collections/threaded_collections')
+#require File.expand_path(File.dirname(__FILE__) + '/config/config')
 
 orig_stdout = $stdout
 THREADS=13 # Feel free to adjust this
@@ -62,11 +66,17 @@ if (logconf["console"] && logconf["console"] != "STDOUT")
 end
 puts "++ Verbose logs in: #{logconf["verbosepath"]}" if logconf["verbosepath"]
 
+puts "Getting images"
 #If you want to modify how you find in-scope images, this is the place.
-MyImgs = ec2.images.tagged("AMI_Exposed").tagged_values('Pending')
-
+begin
+  # MyImgs = ec2.images.tagged("AMI_Exposed").tagged_values('Pending')
+  MyImgs = ec2.images.tagged("amiexposed").tagged_values('yes')
+rescue 
+  puts "Error .."
+end
 
 total = MyImgs.count
+
 completed = 0
 starttime = Time.now
 puts "++ Starting test of #{MyImgs.count} AMIs with #{THREADS} threads at #{starttime.ctime}"
