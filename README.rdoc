@@ -1,4 +1,3 @@
-
 #       d8888 888b     d888 8888888      8888888888                                                   888 
 #      d88888 8888b   d8888   888        888                                                          888 
 #     d88P888 88888b.d88888   888        888                                                          888 
@@ -33,7 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 AMI Exposed was first released at Defcon 19 in 2011.  It's a framework for testing of EC2 AMIs (Amazon Machine Images.)  Largely, it's a set of extensions to Amazon's AWS-SDK for Ruby (see http://aws.amazon.com/sdkforruby/) adding some helpful methods to their classes, and a few new classes.
 
-The Defcon presentation is the most official reference, but this file should help in getting started.
+The Defcon presentation <http://www.youtube.com/watch?v=shPcKEZIMR4> is the most official reference, but this file should help in getting started.
 
 == Prerequisites
 Many Ruby gems are used throughout the tool, and must be installed in order for it to function properly.
